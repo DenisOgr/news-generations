@@ -23,7 +23,7 @@ def load_mystem_and_w2v():
 
 def load_td():
     print("Start loading RDT")
-    model = RDT(dt_pkl_fpath="./rdt.pkl")
+    model = RDT(dt_pkl_fpath="./rdt.pkl.3")
     print("Finish loading RDT")
     return model
 

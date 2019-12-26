@@ -2,3 +2,5 @@ marisa_trie
 numpy
 sklearn
 transformers
+pymystem3
+gensim
