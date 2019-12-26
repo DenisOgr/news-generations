@@ -1,0 +1,4 @@
+marisa_trie
+numpy
+sklearn
+transformers
