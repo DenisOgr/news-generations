@@ -8,7 +8,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("-task", type=str, default='create',  choices=['create', 'merge'])
     parser.add_argument("-n", type=int, required=True)
-    parser.add_argument("-to_dir",  type=str, default='./data/', required=False)
+    parser.add_argument("-to_dir",  type=str, default='./results/', required=False)
     parser.add_argument("-aug_func",  type=str, required=True, choices=['af_stemb', 'af_th', 'af_bert'])
 
     args = parser.parse_args()
