@@ -246,6 +246,8 @@ def create_dataset(all_matches, broadcasts, news, n, aug_func, to_dir, shard_num
                 # getting list of news (with splitting)
                 one_broadcast = broadcasts[broadcasts['match_id'] == match_id].iloc[0]
                 news_scope = get_candidate_news(news, one_broadcast, news_min_limit, news_max_limit)
+                if not news_scope:
+                    continue
                 # print(news_scope)
 
                 # storing origin broadcast and news
