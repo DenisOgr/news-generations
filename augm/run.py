@@ -10,9 +10,11 @@ if __name__ == '__main__':
     parser.add_argument("-n", type=int, required=True)
     parser.add_argument("-to_dir",  type=str, default='./results/', required=False)
     parser.add_argument("-aug_func",  type=str, required=True, choices=['af_stemb', 'af_th', 'af_bert'])
+    parser.add_argument("-shard_size",  type=int, required=True)
 
     args = parser.parse_args()
     assert args.n > 0, "n should more than 0"
+    assert args.shard_size > 0, "shard_size should more than 0"
     assert path.isdir(args.to_dir), "invalid path to store dir: %s" % args.to_dir
     assert args.aug_func in locals(), "Invalid aug_func: %s" % args.aug_func
     args.aug_func = locals()[args.aug_func]
@@ -21,7 +23,7 @@ if __name__ == '__main__':
     if args.task == 'create':
         broadcasts, news = get_datasets()
 
-        all_matches = list(news.match_id.unique())[0:2]
+        all_matches = list(news.match_id.unique())
         random.shuffle(all_matches)
 
         #options for augm functions
@@ -33,7 +35,7 @@ if __name__ == '__main__':
             opt['dt'] = load_td()
 
         args_to_func = [(chunk, args.n, args.aug_func, args.to_dir, idx, opt) for idx, chunk in
-                        enumerate(chunks(all_matches, 1))]
+                        enumerate(chunks(all_matches, args.shard_size))]
 
         def wrapper_create_and_shuffle(all_matches, n, af_stemb, to_dir, shard_num, opt):
             print("Start process with shard: %s" % str(shard_num))
