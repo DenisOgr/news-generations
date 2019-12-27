@@ -429,8 +429,11 @@ def merge(args):
         with(open(tgt_file, "w", encoding="utf-8")) as t:
             while idx_all_files:
                 idx_file = random.choice(idx_all_files)
-                src_line = all_files[idx_file][0].readline()
-                tgt_line = all_files[idx_file][1].readline()
+                try:
+                    src_line = all_files[idx_file][0].readline()
+                    tgt_line = all_files[idx_file][1].readline()
+                except:
+                    print("Error: idx: ", idx_file, "idx_all_files: ", idx_all_files)
 
                 if not src_line or not tgt_line:
                     del all_files[idx_file]
