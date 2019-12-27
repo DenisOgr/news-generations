@@ -436,7 +436,7 @@ def merge(args):
                     print("Error: idx: ", idx_file, "idx_all_files: ", idx_all_files)
 
                 if not src_line or not tgt_line:
-                    del all_files[idx_file]
+                    #del all_files[idx_file]
                     idx_all_files.remove(idx_file)
                     print("remove files.")
                     continue
