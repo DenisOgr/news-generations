@@ -447,3 +447,49 @@ def merge(args):
     print("Source file: ", src_file)
     print("Target file: ", tgt_file)
     pass
+
+
+def to_train_set(args):
+    print("Start transformation.")
+    src_file = "%s/aug_%s_n%s_all.src.txt" % (args.to_dir, args.aug_func.__name__, args.n)
+    tgt_file = "%s/aug_%s_n%s_all.tgt.txt" % (args.to_dir, args.aug_func.__name__, args.n)
+    print("Source file: ", src_file)
+    print("Target file: ", tgt_file)
+
+    assert os.path.isfile(src_file), "File %s should be exist" % src_file
+    assert os.path.isfile(tgt_file), "File %s should be exist" % tgt_file
+    assert os.path.isdir(args.to_save), "Invalid path to dir: " % args.to_save
+    assert args.to_save[-1] != '/'
+
+    num_lines = sum(1 for line in open(src_file, encoding='utf-8'))
+    X_train, X_test = train_test_split(list(range(num_lines)), test_size=0.01, random_state=42)
+    X_train, X_val = train_test_split(X_train, test_size=0.11, random_state=42)
+    print("Len all: ", num_lines)
+    print("Len X_train: ", len(X_train))
+    print("Len X_val: ", len(X_val))
+    print("Len X_test: ", len(X_test))
+    idx = 0
+    files = [
+        (X_train, open('%s/train_src.txt' % args.to_save, "w", encoding='utf-8'), open('%s/train_tgt.txt' % args.to_save, "w", encoding='utf-8')),
+        (X_val, open('%s/valid_src.txt' % args.to_save, "w", encoding='utf-8'), open('%s/valid_tgt.txt' % args.to_save, "w", encoding='utf-8')),
+        (X_test, open('%s/test_src.txt' % args.to_save, "w", encoding='utf-8'), open('%s/test_tgt.txt' % args.to_save, "w", encoding='utf-8'))]
+
+    with(open(src_file, encoding='utf-8')) as s:
+        with(open(tgt_file, encoding='utf-8')) as t:
+            while True:
+                sl = s.readline()
+                tl = t.readline()
+                if not sl or not tl:
+                    break
+                for file in files:
+                    if idx in file[0]:
+                        file[1].write(sl)
+                        file[2].write(tl)
+                idx += 1
+                print(idx)
+
+
+
+
+
+

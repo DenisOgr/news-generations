@@ -6,11 +6,12 @@ from os import path
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("-task", type=str, default='create',  choices=['create', 'merge'])
+    parser.add_argument("-task", type=str, default='create',  choices=['create', 'merge', 'to_train_set'])
     parser.add_argument("-n", type=int, required=True)
     parser.add_argument("-to_dir",  type=str, default='./results/', required=False)
     parser.add_argument("-aug_func",  type=str, required=True, choices=['af_stemb', 'af_th', 'af_bert'])
     parser.add_argument("-shard_size",  type=int, required=True)
+    parser.add_argument("-to_save",  type=str, required=False)
 
     args = parser.parse_args()
     assert args.n > 0, "n should more than 0"
@@ -48,5 +49,8 @@ if __name__ == '__main__':
 
     if args.task == 'merge':
         merge(args)
+
+    if args.task == 'to_train_set':
+        to_train_set(args)
 
 

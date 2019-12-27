@@ -3,3 +3,4 @@
 *.bin
 __pycache__
 rdt.pkl.3
+*.txt
