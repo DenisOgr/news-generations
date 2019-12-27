@@ -372,7 +372,7 @@ def af_th(s, cache, opt={}):
                 continue
             sim_words = dt.most_similar(word.lower(), top_n=10)
             if not sim_words:
-                print("no words for: %s" % word)
+                #print("no words for: %s" % word)
                 continue
 
             cache[idx] = [word[0] for word in sim_words]
@@ -388,7 +388,7 @@ def af_th(s, cache, opt={}):
             try:
                 i = get_num_of_words(cache[idx], 0.4)
                 word = cache[idx][i]
-                print('was: ', s[idx], 'new: ', word)
+                #print('was: ', s[idx], 'new: ', word)
                 s[idx] = word
                 changed += 1
             except IndexError as e:
